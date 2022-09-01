@@ -11,15 +11,19 @@ const Cart = (props) => {
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const haseItems = cartCtx.items.length > 0;
 
-  const cartItemRemoveHandler = id => {};
+  const cartItemRemoveHandler = id => {
+    cartCtx.removeItem(id);
+  };
 
-  const cartItemAddHandler = item => {};
+  const cartItemAddHandler = item => {
+    cartCtx.addItem({...item, amount: 1});
+  };
 
   //dummy data before use http request
   const cartItems = (
     <ul className={classes['cart-items']}>
       {cartCtx.items.map((item) => (
-        <CartItem key={item.id} name={item.name} amount={item.amount} price={item.price} onRemove={cartItemRemoveHandler} onAdd={cartItemAddHandler}/>
+        <CartItem key={item.id} name={item.name} amount={item.amount} price={item.price} onRemove={cartItemRemoveHandler.bind(null, item.id)} onAdd={cartItemAddHandler.bind(null, item)}/>
       ))}
     </ul>
   );
